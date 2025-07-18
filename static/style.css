@@ -1,0 +1,211 @@
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --primary-text: #0d0f10;
+    --secondary-text: #6c89a2;
+    --accent-color: #623708;
+    --accent-hover: #0056b3;
+    --border-color: #dee2e6;
+    --error-color: #f08e98;
+    --success-bg: #e9f7ef;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--primary-text);
+    margin: 0;
+    padding: 2rem 1rem;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(237, 204, 105, 0.05);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    margin: 0;
+    font-weight: 600;
+}
+
+header p {
+    color: var(--secondary-text);
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label, legend {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* Custom File Input */
+.file-label {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.file-label:hover {
+    background-color: var(--accent-hover);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#file-name-display {
+    margin-top: 0.5rem;
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+}
+
+/* Radio Buttons */
+fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.radio-group label {
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--accent-hover);
+}
+
+button:disabled {
+    background-color: var(--secondary-text);
+    cursor: not-allowed;
+}
+
+/* Result Section */
+#result-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--success-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+#result-container h2 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+#response-output {
+    white-space: pre-wrap; /* Keeps formatting from the AI response */
+    font-size: 0.95rem;
+}
+
+#response-output.error {
+    color: var(--error-color);
+    font-weight: 500;
+}
+
+/* Loader */
+#loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    text-align: center;
+    color: var(--secondary-text);
+}
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+/* Optional: style the anchor if you want both buttons to match */
+a {
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  text-decoration: none;
+  color: #f8a20e;
+  padding: 12px 20px;
+  border: 2px solid #f46b27;
+  border-radius: 8px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  background-color: #ec6a0d;
+  color: white;
+}
+
+
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none;
+}

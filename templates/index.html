@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>📄 SAHI</h1><h3> s1-01? for educational purpose</h3>
+            <p><b>warning</b> : This software is strictly for testing, research, and educational purpose use only. It is not intended for production or commercial deployment. All data submitted is processed **anonym</p>
+        </header>
+
+        <main>
+            <form id="resume-form">
+                <div class="form-group">
+                    <label for="resume-file-input" class="file-label">
+                        <span>⬆️ Upload Resume (PDF)</span>
+                        <input type="file" id="resume-file-input" name="resume" accept=".pdf" required>
+                    </label>
+                    <p id="file-name-display"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="job-description">Job Description..</label>
+                    <textarea id="job-description" name="jobDescription" rows="8" placeholder="Paste the full job description here..." required></textarea>
+                </div>
+
+                <fieldset class="form-group">
+                    <legend>Analysis Type</legend>
+                    <div class="radio-group">
+                        <label><input type="radio" name="promptType" value="analysis" checked> Profile Analysis</label>
+                        <label><input type="radio" name="promptType" value="match"> ATS Match</label>
+                        <label><input type="radio" name="promptType" value="skills"> Skills Gap</label>
+                    </div>
+                </fieldset>
+
+                <button type="submit" id="submit-btn">Analyze Now</button>
+            </form>
+
+            <div id="result-container" class="hidden">
+                <h2>Analysis Result</h2>
+                <div id="loader" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing... this may take a moment.</p>
+                </div>
+                <div id="response-output"></div>
+            </div>
+        </main>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a  href="https://docs.google.com/forms/d/e/1FAIpQLSf0GKiy2rkO01v1BX5cr19PLj5dPImWUMaZ0aqi2t-nkaUaVQ/viewform?usp=header">report</a>
+   
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <p align="center"> MIT LICENSE @2025 ? copyrights@2025</p>
+</body>
+</html>
