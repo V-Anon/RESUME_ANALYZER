@@ -4,7 +4,7 @@ import base64
 import logging
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, File, Form, UploadFile, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import pdf2image
 from PIL import Image
@@ -14,12 +14,10 @@ import google.generativeai as genai
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 # Initialize FastAPI app
 app = FastAPI()
 
-
-app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 # Serve the main HTML file at root
 @app.get("/")
@@ -34,17 +32,15 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-
 @app.get("/ping")
 def health_check():
     return {"status": "ok"}
-
 
 # Configure Google Gemini API
 try:
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
-        logger.error("FATAL ERROR: GOOGLE_API_KEY not found in .env file.")
+        logger.error("FATAL ERROR: GOOGLE_API_KEY not found in environment variables.")
     else:
         genai.configure(api_key=api_key)
         logger.info("Google Generative AI configured successfully.")
@@ -63,9 +59,11 @@ def get_gemini_response(input_text, pdf_image_content):
 
 def setup_pdf_image(uploaded_file):
     try:
-        with uploaded_file.file as f:
-            contents = f.read()
-        images = pdf2image.convert_from_bytes(contents, poppler_path=poppler_path)
+        # Read the uploaded file content
+        contents = uploaded_file.file.read()
+        
+        # Convert PDF to images (poppler is installed via apt-get in Docker)
+        images = pdf2image.convert_from_bytes(contents)
         first_page = images[0]
 
         img_byte_arr = io.BytesIO()
@@ -78,8 +76,8 @@ def setup_pdf_image(uploaded_file):
         }]
         return pdf_parts
     except pdf2image.exceptions.PDFInfoNotInstalledError:
-        logger.error("Poppler not found. Make sure it's installed and POPPLER_PATH is set correctly.")
-        raise Exception("Poppler not found or misconfigured.")
+        logger.error("Poppler not found. Make sure it's installed.")
+        raise Exception("PDF processing tools not available.")
     except Exception as e:
         logger.error(f"Error processing PDF: {e}")
         raise Exception(f"PDF processing error: {e}")
@@ -98,10 +96,10 @@ async def analyze_resume_endpoint(
         return JSONResponse(content={"error": "Job description cannot be empty."}, status_code=400)
 
     prompts = {
-        'analysis': """You are an HR specializing in recruitment. Analyze the following job description and resume. Determine how well 
+        'analysis': """You are an HR specialist specializing in recruitment. Analyze the following job description and resume. Determine how well 
                        the resume matches the job requirements. Highlight the candidate's relevant strengths and experiences.""",
-        'match': """You are a skilled ATS tracker you need to show how much percentage the job discription match to the resume ...""",
-        'skills': """You are a career development analyst you need to gave the user what are the missing skills in the resume corresponding to the job discription..."""
+        'match': """You are a skilled ATS tracker. You need to show how much percentage the job description matches the resume.""",
+        'skills': """You are a career development analyst. You need to give the user what are the missing skills in the resume corresponding to the job description."""
     }
 
     base_prompt = prompts.get(promptType)
@@ -115,4 +113,5 @@ async def analyze_resume_endpoint(
         response_text = get_gemini_response(input_text, pdf_content)
         return {"response": response_text}
     except Exception as e:
+        logger.error(f"Analysis error: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
