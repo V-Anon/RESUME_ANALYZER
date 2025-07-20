@@ -59,7 +59,8 @@ def get_gemini_response(input_text, pdf_image_content):
 
 def setup_pdf_image(uploaded_file):
     try:
-        # Read the uploaded file content
+        # Reset file pointer to beginning and read the uploaded file content
+        uploaded_file.file.seek(0)
         contents = uploaded_file.file.read()
         
         # Convert PDF to images (poppler is installed via apt-get in Docker)
