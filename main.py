@@ -2,10 +2,10 @@ import os
 import io
 import base64
 import logging
+from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, File, Form, UploadFile, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.templating import Jinja2Templates
 from dotenv import load_dotenv
 import pdf2image
 from PIL import Image
@@ -29,8 +29,12 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# Setup Jinja2 template rendering
-templates = Jinja2Templates(directory="templates")
+app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
+
+@app.get("/ping")
+def health_check():
+    return {"status": "ok"}
+
 
 # Configure Google Gemini API
 try:
@@ -77,9 +81,6 @@ def setup_pdf_image(uploaded_file):
         raise Exception(f"PDF processing error: {e}")
 
 # --- Routes ---
-@app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/analyze")
 async def analyze_resume_endpoint(
