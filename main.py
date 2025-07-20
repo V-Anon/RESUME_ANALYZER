@@ -36,6 +36,10 @@ app.add_middleware(
 def health_check():
     return {"status": "ok"}
 
+@app.get("/health")
+def health():
+    return {"status": "healthy", "service": "AI Resume Analyzer"}
+
 # Configure Google Gemini API
 try:
     api_key = os.getenv("GOOGLE_API_KEY")
@@ -116,3 +120,9 @@ async def analyze_resume_endpoint(
     except Exception as e:
         logger.error(f"Analysis error: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
+# For Railway deployment - start server if run directly
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
