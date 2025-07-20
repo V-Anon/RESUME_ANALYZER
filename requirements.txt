@@ -1,7 +1,7 @@
-Flask
-Flask-Cors
+fastapi
+uvicorn
 python-dotenv
-gunicorn
 pdf2image
 Pillow
 google-generativeai
+jinja2
