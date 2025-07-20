@@ -21,6 +21,9 @@ load_dotenv()
 # Initialize FastAPI app
 app = FastAPI()
 
+
+app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
+
 # Setup CORS
 app.add_middleware(
     CORSMiddleware,
@@ -29,7 +32,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
 
 @app.get("/ping")
 def health_check():
