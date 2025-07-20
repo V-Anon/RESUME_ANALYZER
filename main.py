@@ -6,7 +6,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, File, Form, UploadFile, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
 import pdf2image
 from PIL import Image
 import google.generativeai as genai
@@ -15,8 +14,6 @@ import google.generativeai as genai
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Load environment variables
-load_dotenv()
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -61,8 +58,8 @@ def get_gemini_response(input_text, pdf_image_content):
 
 def setup_pdf_image(uploaded_file):
     try:
-        poppler_path = os.getenv("POPPLER_PATH", None)  # Use .env variable, fallback to system path
-        contents = uploaded_file.file.read()
+        with uploaded_file.file as f:
+            contents = f.read()
         images = pdf2image.convert_from_bytes(contents, poppler_path=poppler_path)
         first_page = images[0]
 
